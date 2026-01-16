@@ -9,6 +9,16 @@ from typing import Optional, List, Dict
 import os
 from database.db_manager import DatabaseManager
 
+# Optional PDF export support
+try:
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import letter, A4
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+    from reportlab.lib.styles import getSampleStyleSheet
+    REPORTLAB_AVAILABLE = True
+except ImportError:
+    REPORTLAB_AVAILABLE = False
+
 
 class ReportGenerator:
     """Generates attendance reports in various formats."""
@@ -446,12 +456,10 @@ class ReportGenerator:
         Returns:
             Tuple of (success, message)
         """
+        if not REPORTLAB_AVAILABLE:
+            return False, "reportlab library not installed. Install with: pip install reportlab"
+        
         try:
-            from reportlab.lib import colors
-            from reportlab.lib.pagesizes import letter, A4
-            from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
-            from reportlab.lib.styles import getSampleStyleSheet
-            
             # Ensure filename has correct extension
             if not filename.endswith('.pdf'):
                 filename += '.pdf'
@@ -490,7 +498,5 @@ class ReportGenerator:
             
             return True, f"Report exported to {filename}"
             
-        except ImportError:
-            return False, "reportlab library not installed. Install with: pip install reportlab"
         except Exception as e:
             return False, f"Failed to export PDF: {str(e)}"
