@@ -266,15 +266,20 @@ class FaceRecognitionModule:
         except Exception as e:
             return False, f"Error validating face: {str(e)}", None
     
-    def set_tolerance(self, tolerance: float):
+    def set_tolerance(self, tolerance: float) -> bool:
         """
         Update recognition tolerance.
         
         Args:
             tolerance: New tolerance value (0.3-1.0)
+        
+        Returns:
+            bool: True if tolerance was updated, False if invalid
         """
         if 0.3 <= tolerance <= 1.0:
             self.tolerance = tolerance
+            return True
+        return False
     
     def get_tolerance(self) -> float:
         """

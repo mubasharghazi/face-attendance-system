@@ -221,13 +221,17 @@ class ReportGenerator:
         
         Args:
             dataframe: Data to export
-            filename: Output filename (without path)
+            filename: Output filename (without path) or full path
         
         Returns:
             Tuple of (success, filepath or error message)
         """
         try:
-            filepath = os.path.join(self.export_dir, filename)
+            # Check if filename is an absolute path
+            if os.path.isabs(filename):
+                filepath = filename
+            else:
+                filepath = os.path.join(self.export_dir, filename)
             dataframe.to_csv(filepath, index=False)
             return True, filepath
         except Exception as e:
@@ -240,14 +244,18 @@ class ReportGenerator:
         
         Args:
             dataframe: Data to export
-            filename: Output filename (without path)
+            filename: Output filename (without path) or full path
             sheet_name: Sheet name in Excel file
         
         Returns:
             Tuple of (success, filepath or error message)
         """
         try:
-            filepath = os.path.join(self.export_dir, filename)
+            # Check if filename is an absolute path
+            if os.path.isabs(filename):
+                filepath = filename
+            else:
+                filepath = os.path.join(self.export_dir, filename)
             
             with pd.ExcelWriter(filepath, engine='openpyxl') as writer:
                 dataframe.to_excel(writer, sheet_name=sheet_name, index=False)
@@ -400,7 +408,7 @@ class ReportGenerator:
         
         return pd.DataFrame(summary_data)
     
-    def generate_department_report(self, department: str, 
+    def generate_single_department_report(self, department: str, 
                                   start_date: str, end_date: str) -> pd.DataFrame:
         """
         Generate attendance report for a specific department.

@@ -40,7 +40,7 @@ class AttendanceManager:
             return False, "Attendance already marked for today."
         
         # Mark attendance
-        success = self.db.mark_attendance(student_id, status=status)
+        success = self.db.mark_attendance(student_id=student_id, status=status)
         
         if success:
             student = self.db.get_student(student_id)

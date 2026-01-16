@@ -174,14 +174,13 @@ def main():
         
         # Create main window
         logger.info("Initializing GUI...")
-        root = tk.Tk()
-        app = MainWindow(root, config)
+        app = MainWindow(config_path='config.ini')
         
         logger.info("Application started successfully.")
         logger.info("=" * 60)
         
         # Start main loop
-        root.mainloop()
+        app.root.mainloop()
         
         logger.info("Application closed normally.")
         return 0
