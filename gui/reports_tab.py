@@ -398,7 +398,7 @@ class ReportsTab:
         start = self.dept_start_date.get_date().strftime('%Y-%m-%d')
         end = self.dept_end_date.get_date().strftime('%Y-%m-%d')
         
-        return self.report_generator.generate_department_report(department, start, end)
+        return self.report_generator.generate_single_department_report(department, start, end)
     
     def _generate_summary_report(self):
         """Generate summary report."""

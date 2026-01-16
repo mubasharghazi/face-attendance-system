@@ -155,8 +155,8 @@ def validate_threshold(threshold: float) -> tuple[bool, Optional[str]]:
         Tuple of (is_valid, error_message)
     """
     try:
-        threshold = float(threshold)
-        if threshold < 0.3 or threshold > 1.0:
+        threshold_value = float(threshold)
+        if threshold_value < 0.3 or threshold_value > 1.0:
             return False, "Threshold must be between 0.3 and 1.0"
         return True, None
     except (ValueError, TypeError):

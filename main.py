@@ -22,8 +22,11 @@ sys.path.insert(0, project_root)
 from gui.main_window import MainWindow
 from utils.logger import logger
 
+# Configuration file path constant
+CONFIG_PATH = 'config.ini'
 
-def load_config(config_path='config.ini'):
+
+def load_config(config_path=CONFIG_PATH):
     """
     Load application configuration from config file.
     
@@ -174,7 +177,7 @@ def main():
         
         # Create main window
         logger.info("Initializing GUI...")
-        app = MainWindow(config_path='config.ini')
+        app = MainWindow(config_path=CONFIG_PATH)
         
         logger.info("Application started successfully.")
         logger.info("=" * 60)
