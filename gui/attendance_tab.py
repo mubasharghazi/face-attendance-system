@@ -246,13 +246,13 @@ class AttendanceTab:
                                                      daemon=True)
                 self.update_thread.start()
                 
-                self.logger.log('INFO', 'Camera started for attendance')
+                self.logger.info('Camera started for attendance')
             else:
                 messagebox.showerror("Error", "Failed to start camera")
                 
         except Exception as e:
             messagebox.showerror("Error", f"Camera error: {str(e)}")
-            self.logger.log('ERROR', f'Failed to start camera: {str(e)}')
+            self.logger.error(f'Failed to start camera: {str(e)}')
     
     def _stop_camera(self):
         """Stop camera feed."""
@@ -276,10 +276,10 @@ class AttendanceTab:
             self.camera_label.config(image='', text="Camera Off")
             self.recognition_label.config(text="")
             
-            self.logger.log('INFO', 'Camera stopped')
+            self.logger.info('Camera stopped')
             
         except Exception as e:
-            self.logger.log('ERROR', f'Error stopping camera: {str(e)}')
+            self.logger.error(f'Error stopping camera: {str(e)}')
     
     def _toggle_recognition(self):
         """Toggle face recognition on/off."""
@@ -288,14 +288,14 @@ class AttendanceTab:
             self.recognition_btn.config(text="Disable Recognition")
             self.status_indicator.config(text="● Recognition Active", 
                                        fg=self.colors['success'])
-            self.logger.log('INFO', 'Face recognition enabled')
+            self.logger.info('Face recognition enabled')
         else:
             self.recognition_active = False
             self.recognition_btn.config(text="Enable Recognition")
             self.status_indicator.config(text="● Camera Active", 
                                        fg=self.colors['info'])
             self.recognition_label.config(text="")
-            self.logger.log('INFO', 'Face recognition disabled')
+            self.logger.info('Face recognition disabled')
     
     def _update_camera_feed(self):
         """Update camera feed and perform face recognition."""
@@ -361,7 +361,7 @@ class AttendanceTab:
                     self.camera_label.image = photo
                 
             except Exception as e:
-                self.logger.log('ERROR', f'Camera feed error: {str(e)}')
+                self.logger.error(f'Camera feed error: {str(e)}')
                 break
     
     def _mark_attendance_for_student(self, student_id, name):
@@ -392,7 +392,7 @@ class AttendanceTab:
             # Refresh attendance list
             self._refresh_attendance_list()
             
-            self.logger.log('INFO', f'Attendance marked: {student_id} - {name}')
+            self.logger.info(f'Attendance marked: {student_id} - {name}')
     
     def _refresh_attendance_list(self):
         """Refresh today's attendance list."""
@@ -441,7 +441,7 @@ class AttendanceTab:
             )
             
         except Exception as e:
-            self.logger.log('ERROR', f'Failed to refresh attendance list: {str(e)}')
+            self.logger.error(f'Failed to refresh attendance list: {str(e)}')
     
     def _reload_faces(self):
         """Reload known faces from database."""
@@ -450,10 +450,10 @@ class AttendanceTab:
             self.face_recognition.load_known_faces(students)
             messagebox.showinfo("Success", 
                               f"Loaded {len(students)} student faces")
-            self.logger.log('INFO', f'Reloaded {len(students)} faces')
+            self.logger.info(f'Reloaded {len(students)} faces')
         except Exception as e:
             messagebox.showerror("Error", f"Failed to reload faces: {str(e)}")
-            self.logger.log('ERROR', f'Failed to reload faces: {str(e)}')
+            self.logger.error(f'Failed to reload faces: {str(e)}')
     
     def cleanup(self):
         """Cleanup resources."""

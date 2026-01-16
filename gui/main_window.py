@@ -21,7 +21,7 @@ from modules.attendance_manager import AttendanceManager
 from modules.face_recognition_module import FaceRecognitionModule
 from modules.report_generator import ReportGenerator
 from utils.camera_handler import CameraHandler
-from utils.logger import Logger
+from utils.logger import setup_logger
 
 
 class MainWindow:
@@ -40,8 +40,8 @@ class MainWindow:
         
         # Initialize logger
         log_dir = self.config.get('PATHS', 'logs', fallback='logs')
-        self.logger = Logger(log_dir)
-        self.logger.log('INFO', 'Application started')
+        self.logger = setup_logger(log_dir)
+        self.logger.info('Application started')
         
         # Initialize core components
         self._initialize_core_components()
@@ -76,7 +76,7 @@ class MainWindow:
         # Handle window close event
         self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
         
-        self.logger.log('INFO', 'Main window initialized')
+        self.logger.info('Main window initialized')
     
     def _initialize_core_components(self):
         """Initialize core system components."""
@@ -280,7 +280,7 @@ class MainWindow:
             self.notebook.add(self.settings_tab.frame, text="⚙️ Settings")
             
         except Exception as e:
-            self.logger.log('ERROR', f'Failed to create tabs: {str(e)}')
+            self.logger.error(f'Failed to create tabs: {str(e)}')
             messagebox.showerror("Error", f"Failed to create tabs:\n{str(e)}")
     
     def _create_statusbar(self):
@@ -299,7 +299,7 @@ class MainWindow:
     
     def _on_settings_changed(self):
         """Handle settings change event."""
-        self.logger.log('INFO', 'Settings changed, reloading configuration')
+        self.logger.info('Settings changed, reloading configuration')
         
         # Reload configuration
         self.config.read('config.ini')
@@ -323,10 +323,10 @@ class MainWindow:
                 if hasattr(self, 'attendance_tab'):
                     self.attendance_tab.cleanup()
                 
-                self.logger.log('INFO', 'Application closed')
+                self.logger.info('Application closed')
                 
             except Exception as e:
-                self.logger.log('ERROR', f'Error during cleanup: {str(e)}')
+                self.logger.error(f'Error during cleanup: {str(e)}')
             
             self.root.destroy()
     

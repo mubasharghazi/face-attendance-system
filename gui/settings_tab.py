@@ -385,7 +385,7 @@ class SettingsTab:
             self.confirm_password_var.set('')
             
             messagebox.showinfo("Success", "Settings saved successfully!")
-            self.logger.log('INFO', 'Settings saved')
+            self.logger.info('Settings saved')
             
             # Callback
             if self.on_settings_changed:
@@ -393,7 +393,7 @@ class SettingsTab:
             
         except Exception as e:
             messagebox.showerror("Error", f"Failed to save settings: {str(e)}")
-            self.logger.log('ERROR', f'Failed to save settings: {str(e)}')
+            self.logger.error(f'Failed to save settings: {str(e)}')
     
     def _reset_defaults(self):
         """Reset settings to defaults."""
@@ -421,11 +421,11 @@ class SettingsTab:
             self.admin_username_var.set('admin')
             
             messagebox.showinfo("Success", "Settings reset to defaults")
-            self.logger.log('INFO', 'Settings reset to defaults')
+            self.logger.info('Settings reset to defaults')
             
         except Exception as e:
             messagebox.showerror("Error", f"Failed to reset settings: {str(e)}")
-            self.logger.log('ERROR', f'Failed to reset settings: {str(e)}')
+            self.logger.error(f'Failed to reset settings: {str(e)}')
     
     def _export_config(self):
         """Export configuration to file."""
@@ -444,7 +444,7 @@ class SettingsTab:
                 shutil.copy('config.ini', file_path)
                 messagebox.showinfo("Success", 
                                   f"Configuration exported to:\n{file_path}")
-                self.logger.log('INFO', f'Configuration exported to: {file_path}')
+                self.logger.info(f'Configuration exported to: {file_path}')
             except Exception as e:
                 messagebox.showerror("Error", f"Export failed: {str(e)}")
-                self.logger.log('ERROR', f'Configuration export failed: {str(e)}')
+                self.logger.error(f'Configuration export failed: {str(e)}')

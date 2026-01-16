@@ -611,7 +611,7 @@ class DatabaseManager:
         try:
             with self.get_connection() as conn:
                 conn.execute(
-                    "UPDATE attendance SET status = ? WHERE student_id = ? AND date(time) = ?",
+                    "UPDATE attendance SET status = ? WHERE student_id = ? AND date = ?",
                     (status, student_id, date)
                 )
                 conn.commit()
@@ -634,7 +634,7 @@ class DatabaseManager:
         try:
             with self.get_connection() as conn:
                 conn.execute(
-                    "DELETE FROM attendance WHERE student_id = ? AND date(time) = ?",
+                    "DELETE FROM attendance WHERE student_id = ? AND date = ?",
                     (student_id, date)
                 )
                 conn.commit()

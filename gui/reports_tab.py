@@ -327,7 +327,7 @@ class ReportsTab:
             student_list = [f"{s['student_id']} - {s['name']}" for s in students]
             self.student_combo['values'] = student_list
         except Exception as e:
-            self.logger.log('ERROR', f'Failed to load students: {str(e)}')
+            self.logger.error(f'Failed to load students: {str(e)}')
     
     def _generate_preview(self):
         """Generate report preview."""
@@ -359,11 +359,11 @@ class ReportsTab:
             # Display preview
             self._display_preview(report_df)
             
-            self.logger.log('INFO', f'Generated {report_type} report preview')
+            self.logger.info(f'Generated {report_type} report preview')
             
         except Exception as e:
             messagebox.showerror("Error", f"Failed to generate report: {str(e)}")
-            self.logger.log('ERROR', f'Report generation failed: {str(e)}')
+            self.logger.error(f'Report generation failed: {str(e)}')
     
     def _generate_daily_report(self):
         """Generate daily report."""
@@ -497,12 +497,12 @@ class ReportsTab:
                 self.frame.after(0, lambda: messagebox.showinfo(
                     "Success", f"Report exported successfully to:\n{file_path}"
                 ))
-                self.logger.log('INFO', f'Report exported: {file_path}')
+                self.logger.info(f'Report exported: {file_path}')
                 
             except Exception as e:
                 self.frame.after(0, lambda: messagebox.showerror(
                     "Error", f"Export failed: {str(e)}"
                 ))
-                self.logger.log('ERROR', f'Export failed: {str(e)}')
+                self.logger.error(f'Export failed: {str(e)}')
         
         threading.Thread(target=export_thread, daemon=True).start()

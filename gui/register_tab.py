@@ -220,13 +220,13 @@ class RegisterTab:
                                                      daemon=True)
                 self.update_thread.start()
                 
-                self.logger.log('INFO', 'Camera started for registration')
+                self.logger.info('Camera started for registration')
             else:
                 messagebox.showerror("Error", "Failed to start camera")
                 
         except Exception as e:
             messagebox.showerror("Error", f"Camera error: {str(e)}")
-            self.logger.log('ERROR', f'Failed to start camera: {str(e)}')
+            self.logger.error(f'Failed to start camera: {str(e)}')
     
     def _stop_camera(self):
         """Stop camera feed."""
@@ -243,10 +243,10 @@ class RegisterTab:
             # Clear camera display
             self.camera_label.config(image='', text="Camera Off")
             
-            self.logger.log('INFO', 'Camera stopped')
+            self.logger.info('Camera stopped')
             
         except Exception as e:
-            self.logger.log('ERROR', f'Error stopping camera: {str(e)}')
+            self.logger.error(f'Error stopping camera: {str(e)}')
     
     def _update_camera_feed(self):
         """Update camera feed in separate thread."""
@@ -277,7 +277,7 @@ class RegisterTab:
                     self.camera_label.image = photo
                 
             except Exception as e:
-                self.logger.log('ERROR', f'Camera feed error: {str(e)}')
+                self.logger.error(f'Camera feed error: {str(e)}')
                 break
     
     def _capture_face(self):
@@ -310,13 +310,13 @@ class RegisterTab:
                     fg=self.colors['success']
                 )
                 messagebox.showinfo("Success", "Face captured successfully!")
-                self.logger.log('INFO', 'Face captured for registration')
+                self.logger.info('Face captured for registration')
             else:
                 messagebox.showerror("Error", "Failed to encode face")
                 
         except Exception as e:
             messagebox.showerror("Error", f"Face capture failed: {str(e)}")
-            self.logger.log('ERROR', f'Face capture failed: {str(e)}')
+            self.logger.error(f'Face capture failed: {str(e)}')
     
     def _load_image_file(self):
         """Load image from file."""
@@ -369,13 +369,13 @@ class RegisterTab:
                     fg=self.colors['success']
                 )
                 
-                self.logger.log('INFO', f'Face loaded from file: {file_path}')
+                self.logger.info(f'Face loaded from file: {file_path}')
             else:
                 messagebox.showerror("Error", "Failed to encode face")
                 
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load image: {str(e)}")
-            self.logger.log('ERROR', f'Failed to load image: {str(e)}')
+            self.logger.error(f'Failed to load image: {str(e)}')
     
     def _register_student(self):
         """Register student with captured face."""
@@ -420,7 +420,7 @@ class RegisterTab:
             
             if success:
                 messagebox.showinfo("Success", message)
-                self.logger.log('INFO', f'Student registered: {student_id}')
+                self.logger.info(f'Student registered: {student_id}')
                 
                 # Reload known faces in face recognition module
                 students = self.student_manager.db.get_all_students()
@@ -433,7 +433,7 @@ class RegisterTab:
                 
         except Exception as e:
             messagebox.showerror("Error", f"Registration failed: {str(e)}")
-            self.logger.log('ERROR', f'Registration failed: {str(e)}')
+            self.logger.error(f'Registration failed: {str(e)}')
     
     def _clear_form(self):
         """Clear registration form."""

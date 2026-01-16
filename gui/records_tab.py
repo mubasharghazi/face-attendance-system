@@ -288,11 +288,11 @@ class RecordsTab:
             # Display results
             self._display_records(filtered_records)
             
-            self.logger.log('INFO', f'Search completed: {len(filtered_records)} records found')
+            self.logger.info(f'Search completed: {len(filtered_records)} records found')
             
         except Exception as e:
             messagebox.showerror("Error", f"Search failed: {str(e)}")
-            self.logger.log('ERROR', f'Search failed: {str(e)}')
+            self.logger.error(f'Search failed: {str(e)}')
     
     def _display_records(self, records):
         """
@@ -510,9 +510,9 @@ class RecordsTab:
             if success:
                 messagebox.showinfo("Success", "Record deleted successfully")
                 self._search_records()  # Refresh
-                self.logger.log('INFO', f'Deleted attendance record: {student_id} on {date}')
+                self.logger.info(f'Deleted attendance record: {student_id} on {date}')
             else:
                 messagebox.showerror("Error", "Failed to delete record")
         except Exception as e:
             messagebox.showerror("Error", f"Delete failed: {str(e)}")
-            self.logger.log('ERROR', f'Failed to delete record: {str(e)}')
+            self.logger.error(f'Failed to delete record: {str(e)}')

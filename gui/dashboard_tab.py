@@ -249,10 +249,10 @@ class DashboardTab:
             # Update weekly stats
             self._update_weekly_stats()
             
-            self.logger.log('INFO', 'Dashboard refreshed')
+            self.logger.info('Dashboard refreshed')
             
         except Exception as e:
-            self.logger.log('ERROR', f'Failed to refresh dashboard: {str(e)}')
+            self.logger.error(f'Failed to refresh dashboard: {str(e)}')
     
     def _update_statistics(self):
         """Update statistics cards."""
