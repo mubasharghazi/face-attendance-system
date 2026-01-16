@@ -4,6 +4,7 @@ Input validation functions for the application.
 """
 
 import re
+import os
 from typing import Optional
 
 

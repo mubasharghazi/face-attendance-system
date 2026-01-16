@@ -300,11 +300,11 @@ class RegisterTab:
                 return
             
             # Get face encoding
-            encodings = self.face_recognition.encode_faces(self.captured_frame, 
-                                                          face_locations)
+            face_encoding = self.face_recognition.encode_face(self.captured_frame, 
+                                                             face_locations[0])
             
-            if encodings:
-                self.face_encoding = encodings[0]
+            if face_encoding is not None:
+                self.face_encoding = face_encoding
                 self.capture_status_label.config(
                     text="✓ Face captured successfully", 
                     fg=self.colors['success']
@@ -349,10 +349,10 @@ class RegisterTab:
                 return
             
             # Get encoding
-            encodings = self.face_recognition.encode_faces(image, face_locations)
+            face_encoding = self.face_recognition.encode_face(image, face_locations[0])
             
-            if encodings:
-                self.face_encoding = encodings[0]
+            if face_encoding is not None:
+                self.face_encoding = face_encoding
                 self.captured_frame = image.copy()
                 
                 # Display image

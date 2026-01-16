@@ -311,32 +311,32 @@ class AttendanceTab:
                         recognized_name = None
                         recognized_id = None
                         
-                        # Detect and recognize faces
-                        face_locations = self.face_recognition.detect_faces(frame)
+                        # Recognize faces (detect and recognize in one call)
+                        results = self.face_recognition.recognize_faces(frame)
                         
-                        if face_locations:
-                            results = self.face_recognition.recognize_faces(
-                                frame, face_locations
-                            )
+                        for result in results:
+                            top, right, bottom, left = result['location']
+                            student_id = result['student_id']
+                            name = result['name']
+                            confidence = result['confidence']
                             
-                            for (top, right, bottom, left), (student_id, name, confidence) in zip(face_locations, results):
-                                # Draw rectangle
-                                color = (0, 255, 0) if student_id != 'Unknown' else (0, 0, 255)
-                                cv2.rectangle(display_frame, (left, top), 
-                                            (right, bottom), color, 2)
-                                
-                                # Draw label
-                                label = f"{name} ({confidence:.2f})" if student_id != 'Unknown' else name
-                                cv2.rectangle(display_frame, (left, bottom - 35), 
-                                            (right, bottom), color, cv2.FILLED)
-                                cv2.putText(display_frame, label, (left + 6, bottom - 6), 
-                                          cv2.FONT_HERSHEY_DUPLEX, 0.6, (255, 255, 255), 1)
-                                
-                                # Mark attendance for recognized student
-                                if student_id != 'Unknown':
-                                    recognized_name = name
-                                    recognized_id = student_id
-                                    self._mark_attendance_for_student(student_id, name)
+                            # Draw rectangle
+                            color = (0, 255, 0) if result['is_known'] else (0, 0, 255)
+                            cv2.rectangle(display_frame, (left, top), 
+                                        (right, bottom), color, 2)
+                            
+                            # Draw label
+                            label = f"{name} ({confidence:.2f})" if result['is_known'] else name
+                            cv2.rectangle(display_frame, (left, bottom - 35), 
+                                        (right, bottom), color, cv2.FILLED)
+                            cv2.putText(display_frame, label, (left + 6, bottom - 6), 
+                                      cv2.FONT_HERSHEY_DUPLEX, 0.6, (255, 255, 255), 1)
+                            
+                            # Mark attendance for recognized student
+                            if result['is_known'] and student_id:
+                                recognized_name = name
+                                recognized_id = student_id
+                                self._mark_attendance_for_student(student_id, name)
                         
                         # Update recognition label
                         if recognized_name:

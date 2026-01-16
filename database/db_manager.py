@@ -331,7 +331,8 @@ class DatabaseManager:
             
             with self.get_connection() as conn:
                 cursor = conn.execute("""
-                    SELECT a.id, a.student_id, s.name, a.date, a.time, a.status,
+                    SELECT a.id, a.student_id, s.name, a.date, a.time, 
+                           a.date || ' ' || a.time as time, a.status,
                            s.department, s.batch
                     FROM attendance a
                     JOIN students s ON a.student_id = s.student_id
@@ -361,7 +362,8 @@ class DatabaseManager:
         """
         try:
             query = """
-                SELECT a.id, a.student_id, s.name, a.date, a.time, a.status
+                SELECT a.id, a.student_id, s.name, a.date, a.time,
+                       a.date || ' ' || a.time as time, a.status
                 FROM attendance a
                 JOIN students s ON a.student_id = s.student_id
                 WHERE a.student_id = ?
@@ -402,7 +404,8 @@ class DatabaseManager:
         """
         try:
             query = """
-                SELECT a.id, a.student_id, s.name, a.date, a.time, a.status,
+                SELECT a.id, a.student_id, s.name, a.date, a.time,
+                       a.date || ' ' || a.time as time, a.status,
                        s.department, s.batch
                 FROM attendance a
                 JOIN students s ON a.student_id = s.student_id
@@ -470,7 +473,8 @@ class DatabaseManager:
         try:
             with self.get_connection() as conn:
                 cursor = conn.execute("""
-                    SELECT a.id, a.student_id, s.name, a.date, a.time, a.status,
+                    SELECT a.id, a.student_id, s.name, a.date, a.time,
+                           a.date || ' ' || a.time as time, a.status,
                            s.department
                     FROM attendance a
                     JOIN students s ON a.student_id = s.student_id
